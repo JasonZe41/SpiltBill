@@ -26,6 +26,12 @@ struct Participant: Identifiable, Codable {
     
 }
 
+/// Represents the specific payment details when split by amount
+struct PaymentDetail: Codable {
+    var participantID: String
+    var amount: Double
+}
+
 
 enum SplitType: String, Codable {
     case equally, percentage, byAmount
@@ -60,6 +66,8 @@ struct Group:Codable, Identifiable{
     var creationDate: Date
     var expenses: [Expense]
     var participants: [Participant]
+    var payments: [PaymentDetail]? // Details of payments when split by amount
+
 }
 
 

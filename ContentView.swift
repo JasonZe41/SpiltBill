@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    
+    @EnvironmentObject var dataStore: DataStore
+
     // used to track whether the user is authenticated or not
     @AppStorage("isAuthenticated") var isAuthenticated: Bool = false
     
@@ -17,10 +18,9 @@ struct ContentView: View {
         NavigationView {
             if isAuthenticated {
                 VStack {
-                    Image(systemName: "globe")
-                        .imageScale(.large)
-                        .foregroundStyle(.tint)
-                    Text("Hello, world!")
+                    FriendTable()
+                        .environmentObject(dataStore)
+
                 }
                 .padding()
             } else {
