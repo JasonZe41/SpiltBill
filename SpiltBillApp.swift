@@ -15,12 +15,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        
+    let providerFactory = AppCheckDebugProviderFactory()
+    AppCheck.setAppCheckProviderFactory(providerFactory)
+
     FirebaseApp.configure()
         
-        if #available(iOS 14, *) {
-               let providerFactory = DeviceCheckProviderFactory()
-               AppCheck.setAppCheckProviderFactory(providerFactory)
-           }
+//    AppCheck.setAppCheckProviderFactory(CustomAppCheckProviderFactory())
+
 
     return true
   }
@@ -33,10 +35,9 @@ struct SpiltBillApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
 
-    
+    @StateObject var dataStore = DataStore()
     var body: some Scene {
         WindowGroup {
-            let dataStore = DataStore()
             ContentView()
                 .environmentObject(dataStore)
         }

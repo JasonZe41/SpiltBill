@@ -9,11 +9,9 @@ import Foundation
 import SwiftUI
 
 /// Represents an individual participant in an expense. Conforms to `Hashable` for use in collections that require unique identification.
-struct Participant: Identifiable, Codable {
+struct Participant: Identifiable, Codable{
     /// The name of the participant.
        var Name: String
-       
-       var id: String // firestore document ID of the userID
        
     /// The phone number of the participant.
        var PhoneNumber: String
@@ -24,6 +22,10 @@ struct Participant: Identifiable, Codable {
     ///  firestore friendship document ID of current participant
      var friendshipID: String
     
+    var id: String// firestore document ID of the userID
+    
+    var owedAmount: Double = 0  // Default to zero, updated based on calculations
+
 }
 
 /// Represents the specific payment details when split by amount
@@ -33,9 +35,12 @@ struct PaymentDetail: Codable {
 }
 
 
-enum SplitType: String, Codable {
-    case equally, percentage, byAmount
+enum SplitType: String, Codable, CaseIterable {
+    case equally = "Equally"
+    case percentage = "Percentage"
+    case byAmount = "By Amount"
 }
+
 
 
 struct Expense: Codable, Identifiable{
@@ -56,6 +61,11 @@ struct Expense: Codable, Identifiable{
 
     /// reocrd which participant is involved, or another choice is that only reocrd the id
     var participants: [Participant]
+    
+    var payer: Participant
+    
+    var paymentDetails: [PaymentDetail]?  // Optional, used if splitType == .byAmount
+
     
 }
 

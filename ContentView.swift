@@ -15,23 +15,40 @@ struct ContentView: View {
     
     
     var body: some View {
-        NavigationView {
-            if isAuthenticated {
-                VStack {
-                    FriendTable()
-                        .environmentObject(dataStore)
-
-                }
-                .padding()
-            } else {
-                        AuthenticationView(isAuthenticated: $isAuthenticated)
+            NavigationView {
+                if isAuthenticated {
+                    TabView {
+                        FriendTable()
+                            .tabItem {
+                                Text("Friend")
+                            }
+                        
+                        GroupTable()
+                            .tabItem {
+                                Text("Group")
+                            }
+                        
+                        
+                        ExpenseTable()
+                            .tabItem {
+                                Text("Expense")
+                            }
+                        
+                      
+                        
+                        Profile()
+                            .tabItem {
+                                Text("Profile")
+                            }
                     }
+                } else {
+                    AuthenticationView(isAuthenticated: $isAuthenticated)
                 }
-        
-
-    }
+            }
+        }
 }
 
 #Preview {
     ContentView()
+        .environmentObject(DataStore())
 }
