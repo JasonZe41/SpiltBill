@@ -13,7 +13,6 @@ class DataStore: ObservableObject {
     private var db = Firestore.firestore()
     @Published var expenses: [Expense] = []
     @Published var friends: [Participant] = []
-    @Published var groups: [Group] = []
     @Published var currentUser: Participant?
 
 //    @Published var paymentDetails : [PaymentDetail] = []
@@ -42,6 +41,12 @@ class DataStore: ObservableObject {
         UserDefaults.standard.string(forKey: "userId")
     }
     
+    func logout() {
+            // Clear user defaults or any other storage used for user session
+            UserDefaults.standard.removeObject(forKey: "userId")
+            currentUser = nil
+        }
+        
     
     func fetchCurrentUser(completion: @escaping (Participant?) -> Void) {
             guard let userID = getCurrentUserID() else {
@@ -128,7 +133,7 @@ class DataStore: ObservableObject {
 
     
     private func constructExpense(from data: [String: Any], documentID: String, completion: @escaping (Expense) -> Void) {
-        let groupID = (data["GroupID"] as? DocumentReference)?.documentID ?? "Unknown Group"
+//        let groupID = (data["GroupID"] as? DocumentReference)?.documentID ?? "Unknown Group"
         let description = data["Description"] as? String ?? "No Description"
         let totalAmount = data["TotalAmount"] as? Double ?? 0.0
         let splitTypeRaw = data["SplitType"] as? String ?? "equally"
@@ -162,7 +167,7 @@ class DataStore: ObservableObject {
             )
 
             // Fetch all participants and their payment details if necessary
-            participationsRef.whereField("ExpenseID", isEqualTo: self.db.collection("Expenses").document(documentID)).getDocuments { (snapshot, error) in
+            participationsRef.whereField("ExpenseID", isEqualTo: self.db.collection("Expense").document(documentID)).getDocuments { (snapshot, error) in
                 guard let participantDocs = snapshot?.documents, error == nil else {
                     print("Error fetching participants: \(error?.localizedDescription ?? "Unknown error")")
                     group.leave()
@@ -172,6 +177,7 @@ class DataStore: ObservableObject {
                 for participantDoc in participantDocs {
                     group.enter()
                     let participantData = participantDoc.data()
+                    print("payemntDetail \(participantData.self) ")
                     let paidAmount = participantData["PaidAmount"] as? Double ?? 0.0
 //                    let owedPercentage = participantData["OwedPercentage"] as? Double ?? 0.0
 
@@ -187,11 +193,11 @@ class DataStore: ObservableObject {
                                 )
                                 participants.append(participant)
 
-                                // If split by amount, add to payment details
-                                if splitType == .byAmount || splitType == .percentage {
                                     let paymentDetail = PaymentDetail(participantID: userDoc.documentID, amount: paidAmount)
+                                    print(paymentDetail)
                                     paymentDetails.append(paymentDetail)
-                                }
+                                    print("paymentdetail: \(paymentDetail)")
+                                
                                 
                             }
                             group.leave()
@@ -204,10 +210,10 @@ class DataStore: ObservableObject {
             }
 
             group.notify(queue: .main) {
-                var expense = Expense(id: documentID, groupID: groupID, description: description, date: date, totalAmount: totalAmount, splitType: splitType, participants: participants, payer: payer)
-                if splitType == .byAmount {
+                var expense = Expense(id: documentID,  description: description, date: date, totalAmount: totalAmount, splitType: splitType, participants: participants, payer: payer)
                     expense.paymentDetails = paymentDetails
-                }
+                
+                
                 completion(expense)
             }
         }
@@ -215,17 +221,22 @@ class DataStore: ObservableObject {
     
     
     
-    func addExpense(description: String, totalAmount: Double, participants: [Participant], payer: Participant, splitType: SplitType, paymentDetails: [PaymentDetail], completion: @escaping (Result<Void, Error>) -> Void) {
+    func addExpense(description: String, totalAmount: Double, participants: [Participant], payer: Participant, splitType: SplitType, paymentDetails: [PaymentDetail],imageData: Data? = nil, completion: @escaping (Result<Void, Error>) -> Void) {
         let newExpenseRef = db.collection("Expense").document() // Note the collection name corrected to "Expenses"
 
         let payerRef = db.collection("User").document(payer.id) // Reference to the payer in the User collection
-        let newExpenseData: [String: Any] = [
+        var newExpenseData: [String: Any] = [
             "Description": description,
             "TotalAmount": totalAmount,
             "SplitType": splitType.rawValue,
             "Date": Timestamp(date: Date()),
             "PayerID": payerRef  // Storing the DocumentReference of the payer
         ]
+        
+        if let imageData = imageData {
+                    newExpenseData["ImageData"] = imageData.base64EncodedString()  // Store image data as base64 string
+                }
+
 
         // Set the data for the new expense
         newExpenseRef.setData(newExpenseData) { error in
@@ -512,6 +523,12 @@ class DataStore: ObservableObject {
             }
         }
     }
+    
+    
+    
+    
+    
+
 
 
             // MARK: - Group Operation (fetch, add, delete, update)

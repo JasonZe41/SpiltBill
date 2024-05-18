@@ -19,32 +19,28 @@ struct ContentView: View {
                 if isAuthenticated {
                     TabView {
                         FriendTable()
-                            .tabItem {
-                                Text("Friend")
-                            }
-                        
-                        GroupTable()
-                            .tabItem {
-                                Text("Group")
-                            }
-                        
-                        
+                        .tabItem {
+                                       Label("Friends", systemImage: "person.2.fill")
+                                   }
                         ExpenseTable()
-                            .tabItem {
-                                Text("Expense")
-                            }
-                        
-                      
-                        
-                        Profile()
-                            .tabItem {
-                                Text("Profile")
-                            }
-                    }
+                        .tabItem {
+                               Label("Expenses", systemImage: "list.bullet")
+                           }
+                       ProfileView(isAuthenticated: $isAuthenticated)
+                           .tabItem {
+                               Label("Profile", systemImage: "person.circle.fill")
+                           }
+}
                 } else {
                     AuthenticationView(isAuthenticated: $isAuthenticated)
                 }
             }
+            .onAppear {
+                       // Automatically set isAuthenticated to true if there's a userId in UserDefaults
+                       if let _ = UserDefaults.standard.string(forKey: "userId") {
+                           isAuthenticated = true
+                       }
+                   }
         }
 }
 

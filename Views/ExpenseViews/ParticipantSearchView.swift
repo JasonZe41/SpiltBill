@@ -19,23 +19,28 @@ struct ParticipantSearchView: View {
 
     var body: some View {
         NavigationView {
-            List {
-                
-//                TextField("Search", text: $searchText)
-//                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-//                                    .padding()
+            VStack {
+                SearchBar(text: $searchText)
+                    .padding()
 
-                ParticipantRow(participant: currentUser, isSelected: isSelected(currentUser))
-                                   .onTapGesture {
-                                       toggleParticipant(currentUser)
-                                   }
+                List {
+                    Section(header: Text("Current User")) {
+                        ParticipantRow(participant: currentUser, isSelected: isSelected(currentUser))
+                            .onTapGesture {
+                                toggleParticipant(currentUser)
+                            }
+                    }
 
-                ForEach(filteredParticipants, id: \.id) { participant in
-                    ParticipantRow(participant: participant, isSelected: isSelected(participant))
-                        .onTapGesture {
-                            toggleParticipant(participant)
+                    Section(header: Text("Participants")) {
+                        ForEach(filteredParticipants, id: \.id) { participant in
+                            ParticipantRow(participant: participant, isSelected: isSelected(participant))
+                                .onTapGesture {
+                                    toggleParticipant(participant)
+                                }
                         }
+                    }
                 }
+                .listStyle(InsetGroupedListStyle())
             }
             .navigationBarTitle("Select Participants", displayMode: .inline)
             .navigationBarItems(
@@ -46,7 +51,6 @@ struct ParticipantSearchView: View {
                     dismiss()
                 }
             )
-
         }
     }
 
@@ -80,5 +84,31 @@ struct ParticipantRow: View {
         .padding()
         .background(isSelected ? Color.blue : Color.clear)
         .cornerRadius(8)
+    }
+}
+
+struct SearchBar: View {
+    @Binding var text: String
+
+    var body: some View {
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.gray)
+            TextField("Search", text: $text)
+                .textFieldStyle(PlainTextFieldStyle())
+                .foregroundColor(.primary)
+                .autocapitalization(.none)
+            if !text.isEmpty {
+                Button(action: {
+                    self.text = ""
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+        .padding(8)
+        .background(Color(.systemGray6))
+        .cornerRadius(10)
     }
 }

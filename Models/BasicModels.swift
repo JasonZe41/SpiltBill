@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 /// Represents an individual participant in an expense. Conforms to `Hashable` for use in collections that require unique identification.
-struct Participant: Identifiable, Codable{
+struct Participant: Identifiable, Codable, Equatable{
     /// The name of the participant.
        var Name: String
        
@@ -48,7 +48,7 @@ struct Expense: Codable, Identifiable{
     ///  firestore expense table ID of current participant
     var id: String
     
-    var groupID: String  // Reference to a Group
+//    var groupID: String  // Reference to a Group
     
     var description: String
 
@@ -65,19 +65,20 @@ struct Expense: Codable, Identifiable{
     var payer: Participant
     
     var paymentDetails: [PaymentDetail]?  // Optional, used if splitType == .byAmount
-
     
-}
-
-struct Group:Codable, Identifiable{
-    var id: String
-    var groupName: String
-    var description: String
-    var creationDate: Date
-    var expenses: [Expense]
-    var participants: [Participant]
-    var payments: [PaymentDetail]? // Details of payments when split by amount
+    var imageData: Data?  // Optional image data for the receipt
 
 }
+//
+//struct Group:Codable, Identifiable{
+//    var id: String
+//    var groupName: String
+//    var description: String
+//    var creationDate: Date
+//    var expenses: [Expense]
+//    var participants: [Participant]
+//    var payments: [PaymentDetail]? // Details of payments when split by amount
+//
+//}
 
 

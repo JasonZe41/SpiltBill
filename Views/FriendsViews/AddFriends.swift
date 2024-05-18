@@ -4,7 +4,6 @@
 //
 //  Created by Jason Ze on 2024/4/22.
 //
-
 import SwiftUI
 
 struct AddFriends: View {
@@ -14,19 +13,32 @@ struct AddFriends: View {
     @State private var phoneNumberOrEmail: String = ""
     @State private var showingAlert = false
     @State private var alertMessage = ""
+    
     var body: some View {
         NavigationView {
             Form {
-                TextField("Phone number or Email", text: $phoneNumberOrEmail)
-                    .autocapitalization(.none)
-                    .keyboardType(.emailAddress)
-                    .disableAutocorrection(true)
+                Section(header: Text("Find a Friend").font(.headline)) {
+                    TextField("Phone number or Email", text: $phoneNumberOrEmail)
+                        .autocapitalization(.none)
+                        .keyboardType(.emailAddress)
+                        .disableAutocorrection(true)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                }
                 
-                Button("Search") {
-                    searchForUser()
+                Button(action: searchForUser) {
+                    Text("Search")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(phoneNumberOrEmail.isEmpty ? Color.gray : Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
                 .disabled(phoneNumberOrEmail.isEmpty)
             }
+            .padding()
             .navigationBarTitle("Add Friend", displayMode: .inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -40,8 +52,6 @@ struct AddFriends: View {
             }
         }
     }
-    
-    
     
     private func searchForUser() {
         dataStore.searchUser(phoneNumberOrEmail: phoneNumberOrEmail) { result in
@@ -61,7 +71,6 @@ struct AddFriends: View {
         }
     }
 }
-
 
 #Preview {
     AddFriends()

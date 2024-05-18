@@ -4,13 +4,8 @@
 //
 //  Created by Jason Ze on 2024/4/12.
 //
-
 import SwiftUI
 import Firebase
-import FirebaseCore
-import FirebaseAuth
-import FirebaseFirestore
-
 
 struct AuthenticationView: View {
     @State private var name = ""
@@ -20,7 +15,7 @@ struct AuthenticationView: View {
     @State private var isSignUp = false
     @State private var errorMessage: String?
     @Binding var isAuthenticated: Bool
-    
+
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
@@ -47,21 +42,28 @@ struct AuthenticationView: View {
                         .foregroundColor(.red)
                 }
                 
-                Button(isSignUp ? "Sign Up" : "Log In") {
+                Button(action: {
                     if isSignUp {
                         signUp()
                     } else {
                         logIn()
                     }
+                }) {
+                    Text(isSignUp ? "Sign Up" : "Log In")
+                        .bold()
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
                 }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
                 
-                Button("Switch to \(isSignUp ? "Log In" : "Sign Up")") {
+                Button(action: {
                     isSignUp.toggle()
+                }) {
+                    Text("Switch to \(isSignUp ? "Log In" : "Sign Up")")
+                        .foregroundColor(.blue)
                 }
                 .padding()
                 
@@ -71,13 +73,7 @@ struct AuthenticationView: View {
             .navigationTitle(isSignUp ? "Sign Up" : "Log In")
         }
     }
-    
-    
-    private func storeUserId(userId: String) {
-        UserDefaults.standard.set(userId, forKey: "userId")
-    }
-    
-    
+
     private func logIn() {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -89,10 +85,9 @@ struct AuthenticationView: View {
                 self.storeUserId(userId: user.uid)
                 self.isAuthenticated = true
             }
-            
         }
     }
-    
+
     private func signUp() {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -117,11 +112,8 @@ struct AuthenticationView: View {
             }
         }
     }
+    
+    private func storeUserId(userId: String) {
+        UserDefaults.standard.set(userId, forKey: "userId")
+    }
 }
-
-
-
-
-//#Preview {
-//    AuthenticationView()
-//}
