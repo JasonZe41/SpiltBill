@@ -13,19 +13,17 @@ struct AddExpense: View {
     @State private var paymentDetails: [String] = []
     @State private var receiptImage: UIImage?
 
-
     @State private var showingParticipantSearch = false
     @State private var showingPayerSearch = false
     @State private var showingAlert = false
     @State private var alertMessage = ""
 
-    
     init(description: String = "", totalAmount: String = "", receiptImage: UIImage? = nil) {
-            _description = State(initialValue: description)
-            _totalAmount = State(initialValue: totalAmount)
-            _receiptImage = State(initialValue: receiptImage)
-        }
-    
+        _description = State(initialValue: description)
+        _totalAmount = State(initialValue: totalAmount)
+        _receiptImage = State(initialValue: receiptImage)
+    }
+
     var body: some View {
         NavigationView {
             Form {
@@ -36,21 +34,20 @@ struct AddExpense: View {
                 }
 
                 Section(header: Text("Select Payer")) {
-                                   if let payer = payer {
-                                       HStack {
-                                           Text(payer.Name)
-                                           Spacer()
-                                           Button("Change") {
-                                               showingPayerSearch = true
-                                           }
-                                       }
-                                   } else {
-                                       Button("Select Payer") {
-                                           showingPayerSearch = true
-                                       }
-                                   }
-                               }
-
+                    if let payer = payer {
+                        HStack {
+                            Text(payer.Name)
+                            Spacer()
+                            Button("Change") {
+                                showingPayerSearch = true
+                            }
+                        }
+                    } else {
+                        Button("Select Payer") {
+                            showingPayerSearch = true
+                        }
+                    }
+                }
 
                 Section(header: Text("Split Type")) {
                     Picker("Split Type", selection: $splitType) {
@@ -70,11 +67,10 @@ struct AddExpense: View {
                                     self.paymentDetails.indices.contains(index) ? self.paymentDetails[index] : ""
                                 }, set: { newValue in
                                     if self.paymentDetails.indices.contains(index) {
-                                                            self.paymentDetails[index] = newValue
-                                                        } else {
-                                                            // Append new value if index does not exist
-                                                            self.paymentDetails.append(newValue)
-                                                        }
+                                        self.paymentDetails[index] = newValue
+                                    } else {
+                                        self.paymentDetails.append(newValue)
+                                    }
                                 }))
                                 .keyboardType(.decimalPad)
                             }
@@ -92,18 +88,15 @@ struct AddExpense: View {
                     .disabled(description.isEmpty || totalAmount.isEmpty || payer == nil || participants.isEmpty)
                 }
                 
-                // Payment Options Section
-                              if !description.isEmpty && !totalAmount.isEmpty && payer != nil && !participants.isEmpty {
-                                  Section(header: Text("Send Payment Request")) {
-//                                      Button("Pay with PayPal") {
-//                                          openPayPal()
-//                                      }
-                                      Button("Pay with Venmo") {
-                                          openVenmo()
-                                      }
-                                  }
-                              }
-                          
+                Section {
+                    if let payer = payer {
+                        Button("Pay with Venmo") {
+                            openVenmo()
+                        }
+                        .disabled(totalAmount.isEmpty || payer.PhoneNumber.isEmpty)
+                    }
+                }
+
             }
             .navigationBarTitle("Add Expense", displayMode: .inline)
             .toolbar {
@@ -114,34 +107,30 @@ struct AddExpense: View {
                 }
             }
             .sheet(isPresented: $showingParticipantSearch) {
-                
                 if let currentUser = dataStore.currentUser {
-                                                ParticipantSearchView(selectedParticipants: $participants, allParticipants: $dataStore.friends, currentUser: currentUser)
-                                            } else {
-                                                // Optionally handle the case where the current user is not yet loaded
-                                                Text("Loading user data...")
-                                            }
+                    ParticipantSearchView(selectedParticipants: $participants, allParticipants: $dataStore.friends, currentUser: currentUser)
+                } else {
+                    Text("Loading user data...")
+                }
             }
             .sheet(isPresented: $showingPayerSearch) {
-                if let currentUser = dataStore.currentUser {  // Ensure currentUser is loaded before showing the view
+                if let currentUser = dataStore.currentUser {
                     ParticipantSearchView(
                         selectedParticipants: Binding(get: {
-                            [payer].compactMap { $0 }  // Return an array with the current payer if not nil
+                            [payer].compactMap { $0 }
                         }, set: { newValue in
-                            payer = newValue.first  // Set the first selected participant as the payer
+                            payer = newValue.first
                             if let newPayer = newValue.first, !participants.contains(where: { $0.id == newPayer.id }) {
-                                participants.append(newPayer)  // Add payer to participants if not already included
+                                participants.append(newPayer)
                             }
                         }),
                         allParticipants: $dataStore.friends,
                         currentUser: currentUser
                     )
                 } else {
-                    // Optionally handle the case where the current user is not yet loaded
                     Text("Loading user data...")
                 }
             }
-
             .alert(isPresented: $showingAlert) {
                 Alert(title: Text("Expense Creation"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
             }
@@ -157,30 +146,38 @@ struct AddExpense: View {
             return
         }
 
-        
-        let imageData = receiptImage?.jpegData(compressionQuality: 0.8)
-
-        // Call addExpense on dataStore
-        dataStore.addExpense(description: description, totalAmount: totalAmountDouble, participants: participants, payer: payer, splitType: splitType, paymentDetails: details, imageData: imageData) { result in
-            DispatchQueue.main.async {
+        if let receiptImage = receiptImage {
+            dataStore.uploadImage(receiptImage) { result in
                 switch result {
-                case .success():
-                    alertMessage = "Expense added successfully."
-                    dismiss() // Optionally dismiss the view on success
+                case .success(let url):
+                    self.addExpenseToDataStore(imageURL: url, details: details, totalAmountDouble: totalAmountDouble, payer: payer)
                 case .failure(let error):
-                    alertMessage = "An error occurred: \(error.localizedDescription)"
+                    self.alertMessage = "Image upload failed: \(error.localizedDescription)"
+                    self.showingAlert = true
                 }
-                showingAlert = true
             }
+        } else {
+            self.addExpenseToDataStore(imageURL: nil, details: details, totalAmountDouble: totalAmountDouble, payer: payer)
         }
     }
 
-
-
-//    private func openPayPal() {
-//        guard let url = URL(string: "https://www.paypal.com/myaccount/transfer/send") else { return }
-//        UIApplication.shared.open(url)
-//    }
+    private func addExpenseToDataStore(imageURL: URL?, details: [PaymentDetail], totalAmountDouble: Double, payer: Participant) {
+        dataStore.addExpense(description: description, totalAmount: totalAmountDouble, participants: participants, payer: payer, splitType: splitType, paymentDetails: details, imageURL: imageURL) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success():
+                    self.alertMessage = "Expense added successfully."
+                    self.showingAlert = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self.dismiss()
+                    }
+                case .failure(let error):
+                    self.alertMessage = "An error occurred: \(error.localizedDescription)"
+                    self.showingAlert = true
+                }
+            }
+        }
+    }
 
     private func openVenmo() {
         let venmoURL = "venmo://paycharge?txn=pay&recipients=\(payer?.PhoneNumber ?? "")&amount=\(totalAmount)&note=Splitting bill for \(description)"
@@ -202,11 +199,7 @@ struct AddExpense: View {
                 return PaymentDetail(participantID: participants[index].id, amount: finalAmount)
             }
         case .percentage:
-            print("Original paymentDetails: \(paymentDetails)")  // Check what's in the array
             let totalPercentage = paymentDetails.compactMap { Double($0) }.reduce(0, +)
-            print("Converted percentages: \(paymentDetails.compactMap(Double.init))")  // See the converted values
-            print("Total percentage: \(totalPercentage)")
-            
             if totalPercentage != 100 {
                 alertMessage = "Total percentage does not add up to 100%."
                 showingAlert = true
@@ -217,25 +210,21 @@ struct AddExpense: View {
                 return PaymentDetail(participantID: participants[index].id, amount: (percentage / 100) * totalAmount)
             }
         case .byAmount:
-                let paymentAmounts = paymentDetails.compactMap(Double.init) // Convert to Double
-                    print("paymentAmounts\(paymentAmounts)")
-                print(type(of: paymentAmounts))
-                if paymentAmounts.count != participants.count {
-                    alertMessage = "Please enter a valid amount for each participant."
-                    showingAlert = true
-                    return nil
-                }
-
-                let totalSpecificAmounts = paymentAmounts.reduce(0, +)
-                if totalSpecificAmounts != totalAmount {
-                    alertMessage = "The sum of amounts (\(totalSpecificAmounts)) does not equal the total amount (\(totalAmount))."
-                    showingAlert = true
-                    return nil
-                }
-                details = zip(participants, paymentAmounts).map { PaymentDetail(participantID: $0.id, amount: $1) }
+            let paymentAmounts = paymentDetails.compactMap(Double.init)
+            if paymentAmounts.count != participants.count {
+                alertMessage = "Please enter a valid amount for each participant."
+                showingAlert = true
+                return nil
             }
-            return details
+
+            let totalSpecificAmounts = paymentAmounts.reduce(0, +)
+            if totalSpecificAmounts != totalAmount {
+                alertMessage = "The sum of amounts (\(totalSpecificAmounts)) does not equal the total amount (\(totalAmount))."
+                showingAlert = true
+                return nil
+            }
+            details = zip(participants, paymentAmounts).map { PaymentDetail(participantID: $0.id, amount: $1) }
+        }
+        return details
     }
-
 }
-

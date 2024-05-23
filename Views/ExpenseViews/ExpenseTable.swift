@@ -106,18 +106,15 @@ struct ExpenseRow: View {
                 VStack(alignment: .leading) {
                     Text(expense.description)
                         .font(.headline)
+                        .foregroundColor(.primary)
+
                     Text("Amount: \(expense.totalAmount, specifier: "%.2f")")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.gray)
+
             }
-            .padding()
         }
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 5)
+       
     }
 }

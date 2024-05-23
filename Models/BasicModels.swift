@@ -4,36 +4,69 @@
 //
 //  Created by Jason Ze on 2024/4/13.
 //
-
 import Foundation
-import SwiftUI
+struct Participant: Identifiable, Codable, Equatable {
+    var id: String
+    var Name: String
+    var PhoneNumber: String
+    var Email: String
+    var friendshipID: String
+    var owedAmount: Double = 0
+    
+    init(id: String, Name: String, PhoneNumber: String, Email: String, friendshipID: String, owedAmount: Double = 0) {
+        self.id = id
+        self.Name = Name
+        self.PhoneNumber = PhoneNumber
+        self.Email = Email
+        self.friendshipID = friendshipID
+        self.owedAmount = owedAmount
+    }
 
-/// Represents an individual participant in an expense. Conforms to `Hashable` for use in collections that require unique identification.
-struct Participant: Identifiable, Codable, Equatable{
-    /// The name of the participant.
-       var Name: String
-       
-    /// The phone number of the participant.
-       var PhoneNumber: String
-       
-    /// The email of the participant
-       var Email: String
+    init(dictionary: [String: Any]) {
+        self.id = dictionary["id"] as? String ?? ""
+        self.Name = dictionary["Name"] as? String ?? ""
+        self.PhoneNumber = dictionary["PhoneNumber"] as? String ?? ""
+        self.Email = dictionary["Email"] as? String ?? ""
+        self.friendshipID = dictionary["friendshipID"] as? String ?? ""
+        self.owedAmount = dictionary["owedAmount"] as? Double ?? 0
+    }
     
-    ///  firestore friendship document ID of current participant
-     var friendshipID: String
-    
-    var id: String// firestore document ID of the userID
-    
-    var owedAmount: Double = 0  // Default to zero, updated based on calculations
-
+    func toDictionary() -> [String: Any] {
+        return [
+            "id": id,
+            "Name": Name,
+            "PhoneNumber": PhoneNumber,
+            "Email": Email,
+            "friendshipID": friendshipID,
+            "owedAmount": owedAmount
+        ]
+    }
 }
 
-/// Represents the specific payment details when split by amount
+
 struct PaymentDetail: Codable {
     var participantID: String
     var amount: Double
+    
+    
+    init(participantID: String, amount: Double){
+        self.participantID = participantID
+        self.amount = amount
+    }
+    
+    
+    init(dictionary: [String: Any]) {
+        self.participantID = dictionary["participantID"] as? String ?? ""
+        self.amount = dictionary["amount"] as? Double ?? 0.0
+    }
+    
+    func toDictionary() -> [String: Any] {
+        return [
+            "participantID": participantID,
+            "amount": amount
+        ]
+    }
 }
-
 
 enum SplitType: String, Codable, CaseIterable {
     case equally = "Equally"
@@ -41,44 +74,54 @@ enum SplitType: String, Codable, CaseIterable {
     case byAmount = "By Amount"
 }
 
-
-
-struct Expense: Codable, Identifiable{
-   
-    ///  firestore expense table ID of current participant
+struct Expense: Codable, Identifiable {
     var id: String
-    
-//    var groupID: String  // Reference to a Group
-    
     var description: String
-
     var date: Date
-    
     var totalAmount: Double
-    
     var splitType: SplitType
-    
-
-    /// reocrd which participant is involved, or another choice is that only reocrd the id
     var participants: [Participant]
-    
     var payer: Participant
+    var paymentDetails: [PaymentDetail]?
+    var imageData: Data?
     
-    var paymentDetails: [PaymentDetail]?  // Optional, used if splitType == .byAmount
+    init(id: String, description: String, date: Date, totalAmount: Double, splitType: SplitType, participants: [Participant], payer: Participant, paymentDetails: [PaymentDetail]? = nil, imageData: Data? = nil) {
+        self.id = id
+        self.description = description
+        self.date = date
+        self.totalAmount = totalAmount
+        self.splitType = splitType
+        self.participants = participants
+        self.payer = payer
+        self.paymentDetails = paymentDetails
+        self.imageData = imageData
+    }
     
-    var imageData: Data?  // Optional image data for the receipt
+    init(dictionary: [String: Any]) {
+        self.id = dictionary["id"] as? String ?? ""
+        self.description = dictionary["description"] as? String ?? ""
+        self.totalAmount = dictionary["totalAmount"] as? Double ?? 0.0
+        self.payer = Participant(dictionary: dictionary["payer"] as? [String: Any] ?? [:])
+        self.participants = (dictionary["participants"] as? [[String: Any]] ?? []).map { Participant(dictionary: $0) }
+        self.date = Date(timeIntervalSince1970: dictionary["date"] as? TimeInterval ?? 0)
+        self.splitType = SplitType(rawValue: dictionary["splitType"] as? String ?? "") ?? .equally
+        self.paymentDetails = (dictionary["paymentDetails"] as? [[String: Any]] ?? []).map { PaymentDetail(dictionary: $0) }
+        if let imageDataString = dictionary["imageData"] as? String, let imageData = Data(base64Encoded: imageDataString) {
+            self.imageData = imageData
+        }
+    }
 
+    func toDictionary() -> [String: Any] {
+        return [
+            "id": id,
+            "description": description,
+            "totalAmount": totalAmount,
+            "payer": payer.toDictionary(),
+            "participants": participants.map { $0.toDictionary() },
+            "date": date.timeIntervalSince1970,
+            "splitType": splitType.rawValue,
+            "paymentDetails": paymentDetails?.map { $0.toDictionary() },
+            "imageData": imageData?.base64EncodedString() ?? ""
+        ]
+    }
 }
-//
-//struct Group:Codable, Identifiable{
-//    var id: String
-//    var groupName: String
-//    var description: String
-//    var creationDate: Date
-//    var expenses: [Expense]
-//    var participants: [Participant]
-//    var payments: [PaymentDetail]? // Details of payments when split by amount
-//
-//}
-
-

@@ -71,10 +71,8 @@ struct FriendRow: View {
         NavigationLink(destination: FriendDetailView(friend: friend).environmentObject(dataStore)) {
             HStack {
                 Image(systemName: "person.fill")
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .background(Circle().fill(Color.blue))
-                    .foregroundColor(.white)
+                    .foregroundColor(.blue)
+                    .frame(width: 32, height: 32)
                 VStack(alignment: .leading) {
                     Text(friend.Name)
                         .font(.headline)
@@ -83,11 +81,8 @@ struct FriendRow: View {
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.gray)
+            
             }
-            .padding(.vertical, 8)
         }
     }
 }

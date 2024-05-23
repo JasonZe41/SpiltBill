@@ -178,10 +178,15 @@ struct OCRView: View {
 
     private func detectTotalAmount(in line: String) -> String? {
         let pattern = "\\$\\s*\\d+(\\.\\d{2})?"
-        if let range = line.range(of: pattern, options: .regularExpression) {
-            return String(line[range])
-        }
-        return nil
+           let regex = try? NSRegularExpression(pattern: pattern, options: [])
+           
+           guard let matches = regex?.matches(in: line, options: [], range: NSRange(line.startIndex..., in: line)),
+                 let lastMatch = matches.last else {
+               return nil
+           }
+           
+           let range = Range(lastMatch.range, in: line)
+           return range.map { String(line[$0]) }
     }
 
     private func cleanAmount(_ amount: String) -> String {
