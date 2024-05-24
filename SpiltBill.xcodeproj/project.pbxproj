@@ -1,0 +1,738 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A56710992C0067770020B17A /* SpiltBillWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56710982C0067770020B17A /* SpiltBillWatchApp.swift */; };
+		A567109B2C0067770020B17A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A567109A2C0067770020B17A /* ContentView.swift */; };
+		A567109D2C0067780020B17A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A567109C2C0067780020B17A /* Assets.xcassets */; };
+		A56710A02C0067780020B17A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A567109F2C0067780020B17A /* Preview Assets.xcassets */; };
+		A56710A32C0067780020B17A /* SpiltBillWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A56710962C0067760020B17A /* SpiltBillWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A56710AB2C006BD30020B17A /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = A56710AA2C006BD30020B17A /* FirebaseAppCheck */; };
+		A56710AD2C006BD70020B17A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A56710AC2C006BD70020B17A /* FirebaseAuth */; };
+		A56710AF2C006BDF0020B17A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A56710AE2C006BDF0020B17A /* FirebaseFirestore */; };
+		A56710B12C006BE70020B17A /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A56710B02C006BE70020B17A /* FirebaseStorage */; };
+		A56710B62C006F8D0020B17A /* WatchDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56710B52C006F8D0020B17A /* WatchDataStore.swift */; };
+		A56710B72C006F9B0020B17A /* BasicModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E88E522BCA755B009F0D1A /* BasicModels.swift */; };
+		A56710BA2C0071B30020B17A /* FriendListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56710B92C0071B30020B17A /* FriendListView.swift */; };
+		A56710BC2C0071CA0020B17A /* FriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56710BB2C0071CA0020B17A /* FriendDetailView.swift */; };
+		A56710BE2C0071DF0020B17A /* ExpenseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56710BD2C0071DF0020B17A /* ExpenseListView.swift */; };
+		A56710C02C0071F20020B17A /* ExpenseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56710BF2C0071F20020B17A /* ExpenseDetailView.swift */; };
+		A56710C52C0082120020B17A /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A56710C32C00795F0020B17A /* WatchConnectivity.framework */; };
+		A56710C82C0082170020B17A /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A56710C12C0079560020B17A /* WatchConnectivity.framework */; };
+		A56710CC2C013BB30020B17A /* Preview.MP4 in Resources */ = {isa = PBXBuildFile; fileRef = A56710CB2C013BB30020B17A /* Preview.MP4 */; };
+		A57075EC2BF2BB9800839A86 /* ExpenseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57075EB2BF2BB9800839A86 /* ExpenseDetailView.swift */; };
+		A590EE172BE0B2D100CD4627 /* OCRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A590EE162BE0B2D100CD4627 /* OCRView.swift */; };
+		A590EE192BE0B31200CD4627 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A590EE182BE0B31200CD4627 /* ImagePicker.swift */; };
+		A590EE1B2BE0B32F00CD4627 /* TextRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A590EE1A2BE0B32F00CD4627 /* TextRecognizer.swift */; };
+		A5E0F5DF2BD2FABA00453E74 /* DeviceCheckProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E0F5DE2BD2FABA00453E74 /* DeviceCheckProvider.swift */; };
+		A5E0F5E52BD6446E00453E74 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E0F5E42BD6446E00453E74 /* Profile.swift */; };
+		A5E0F5E92BD6468100453E74 /* AddFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E0F5E82BD6468100453E74 /* AddFriends.swift */; };
+		A5E0F5EE2BDBF96800453E74 /* ExpenseTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E0F5ED2BDBF96800453E74 /* ExpenseTable.swift */; };
+		A5E0F5F02BDBFB1700453E74 /* AddExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E0F5EF2BDBFB1700453E74 /* AddExpense.swift */; };
+		A5E0F5F22BDBFFB700453E74 /* ParticipantSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E0F5F12BDBFFB700453E74 /* ParticipantSearchView.swift */; };
+		A5E88E2D2BC9E617009F0D1A /* SpiltBillApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E88E2C2BC9E617009F0D1A /* SpiltBillApp.swift */; };
+		A5E88E2F2BC9E617009F0D1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E88E2E2BC9E617009F0D1A /* ContentView.swift */; };
+		A5E88E312BC9E618009F0D1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5E88E302BC9E618009F0D1A /* Assets.xcassets */; };
+		A5E88E342BC9E618009F0D1A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5E88E332BC9E618009F0D1A /* Preview Assets.xcassets */; };
+		A5E88E3B2BC9E6DE009F0D1A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5E88E3A2BC9E6DE009F0D1A /* GoogleService-Info.plist */; };
+		A5E88E482BC9E77D009F0D1A /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E88E472BC9E77D009F0D1A /* AuthenticationView.swift */; };
+		A5E88E4F2BCA74EA009F0D1A /* FriendTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E88E4E2BCA74EA009F0D1A /* FriendTable.swift */; };
+		A5E88E532BCA755B009F0D1A /* BasicModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E88E522BCA755B009F0D1A /* BasicModels.swift */; };
+		A5E88E552BCA794B009F0D1A /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E88E542BCA794B009F0D1A /* DataStore.swift */; };
+		A5E88E592BCB89CD009F0D1A /* FriendDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E88E582BCB89CD009F0D1A /* FriendDetailView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A56710A12C0067780020B17A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5E88E212BC9E617009F0D1A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A56710952C0067760020B17A;
+			remoteInfo = "SpiltBillWatch Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A522EFF02BFAC18100D8B76C /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				A56710A32C0067780020B17A /* SpiltBillWatch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A514F8B92BFF39A4005FE01B /* SpiltBill.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpiltBill.entitlements; sourceTree = "<group>"; };
+		A514F8CA2BFF3C86005FE01B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A567107C2C0045630020B17A /* SpiltBillApp Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SpiltBillApp Watch App.entitlements"; sourceTree = "<group>"; };
+		A56710962C0067760020B17A /* SpiltBillWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SpiltBillWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A56710982C0067770020B17A /* SpiltBillWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiltBillWatchApp.swift; sourceTree = "<group>"; };
+		A567109A2C0067770020B17A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A567109C2C0067780020B17A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A567109F2C0067780020B17A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A56710A72C0067AE0020B17A /* SpiltBillWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SpiltBillWatch Watch App.entitlements"; sourceTree = "<group>"; };
+		A56710B52C006F8D0020B17A /* WatchDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchDataStore.swift; sourceTree = "<group>"; };
+		A56710B92C0071B30020B17A /* FriendListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListView.swift; sourceTree = "<group>"; };
+		A56710BB2C0071CA0020B17A /* FriendDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailView.swift; sourceTree = "<group>"; };
+		A56710BD2C0071DF0020B17A /* ExpenseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseListView.swift; sourceTree = "<group>"; };
+		A56710BF2C0071F20020B17A /* ExpenseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailView.swift; sourceTree = "<group>"; };
+		A56710C12C0079560020B17A /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = System/Library/Frameworks/WatchConnectivity.framework; sourceTree = SDKROOT; };
+		A56710C32C00795F0020B17A /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS10.2.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
+		A56710CB2C013BB30020B17A /* Preview.MP4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Preview.MP4; path = ../../../../../Downloads/Preview.MP4; sourceTree = "<group>"; };
+		A57075EB2BF2BB9800839A86 /* ExpenseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailView.swift; sourceTree = "<group>"; };
+		A590EE162BE0B2D100CD4627 /* OCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRView.swift; sourceTree = "<group>"; };
+		A590EE182BE0B31200CD4627 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		A590EE1A2BE0B32F00CD4627 /* TextRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizer.swift; sourceTree = "<group>"; };
+		A5E0F5DE2BD2FABA00453E74 /* DeviceCheckProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCheckProvider.swift; sourceTree = "<group>"; };
+		A5E0F5E42BD6446E00453E74 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		A5E0F5E82BD6468100453E74 /* AddFriends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriends.swift; sourceTree = "<group>"; };
+		A5E0F5ED2BDBF96800453E74 /* ExpenseTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTable.swift; sourceTree = "<group>"; };
+		A5E0F5EF2BDBFB1700453E74 /* AddExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpense.swift; sourceTree = "<group>"; };
+		A5E0F5F12BDBFFB700453E74 /* ParticipantSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantSearchView.swift; sourceTree = "<group>"; };
+		A5E88E292BC9E617009F0D1A /* SpiltBill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpiltBill.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5E88E2C2BC9E617009F0D1A /* SpiltBillApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiltBillApp.swift; sourceTree = "<group>"; };
+		A5E88E2E2BC9E617009F0D1A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A5E88E302BC9E618009F0D1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A5E88E332BC9E618009F0D1A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A5E88E3A2BC9E6DE009F0D1A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A5E88E472BC9E77D009F0D1A /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		A5E88E4E2BCA74EA009F0D1A /* FriendTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTable.swift; sourceTree = "<group>"; };
+		A5E88E522BCA755B009F0D1A /* BasicModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicModels.swift; sourceTree = "<group>"; };
+		A5E88E542BCA794B009F0D1A /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		A5E88E582BCB89CD009F0D1A /* FriendDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDetailView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A56710932C0067760020B17A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A56710C52C0082120020B17A /* WatchConnectivity.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5E88E262BC9E617009F0D1A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A56710AB2C006BD30020B17A /* FirebaseAppCheck in Frameworks */,
+				A56710B12C006BE70020B17A /* FirebaseStorage in Frameworks */,
+				A56710AD2C006BD70020B17A /* FirebaseAuth in Frameworks */,
+				A56710AF2C006BDF0020B17A /* FirebaseFirestore in Frameworks */,
+				A56710C82C0082170020B17A /* WatchConnectivity.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A56710972C0067770020B17A /* SpiltBillWatch Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				A56710A72C0067AE0020B17A /* SpiltBillWatch Watch App.entitlements */,
+				A56710982C0067770020B17A /* SpiltBillWatchApp.swift */,
+				A567109A2C0067770020B17A /* ContentView.swift */,
+				A567109C2C0067780020B17A /* Assets.xcassets */,
+				A56710CB2C013BB30020B17A /* Preview.MP4 */,
+				A567109E2C0067780020B17A /* Preview Content */,
+				A56710B52C006F8D0020B17A /* WatchDataStore.swift */,
+				A56710B92C0071B30020B17A /* FriendListView.swift */,
+				A56710BB2C0071CA0020B17A /* FriendDetailView.swift */,
+				A56710BD2C0071DF0020B17A /* ExpenseListView.swift */,
+				A56710BF2C0071F20020B17A /* ExpenseDetailView.swift */,
+			);
+			path = "SpiltBillWatch Watch App";
+			sourceTree = "<group>";
+		};
+		A567109E2C0067780020B17A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				A567109F2C0067780020B17A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A5E0F5E62BD6464800453E74 /* FriendsViews */ = {
+			isa = PBXGroup;
+			children = (
+				A5E88E582BCB89CD009F0D1A /* FriendDetailView.swift */,
+				A5E88E4E2BCA74EA009F0D1A /* FriendTable.swift */,
+				A5E0F5E82BD6468100453E74 /* AddFriends.swift */,
+			);
+			path = FriendsViews;
+			sourceTree = "<group>";
+		};
+		A5E0F5E72BD6465700453E74 /* ExpenseViews */ = {
+			isa = PBXGroup;
+			children = (
+				A5E0F5ED2BDBF96800453E74 /* ExpenseTable.swift */,
+				A5E0F5EF2BDBFB1700453E74 /* AddExpense.swift */,
+				A5E0F5F12BDBFFB700453E74 /* ParticipantSearchView.swift */,
+				A590EE162BE0B2D100CD4627 /* OCRView.swift */,
+				A57075EB2BF2BB9800839A86 /* ExpenseDetailView.swift */,
+			);
+			path = ExpenseViews;
+			sourceTree = "<group>";
+		};
+		A5E88E202BC9E617009F0D1A = {
+			isa = PBXGroup;
+			children = (
+				A567107C2C0045630020B17A /* SpiltBillApp Watch App.entitlements */,
+				A5E88E2B2BC9E617009F0D1A /* SpiltBill */,
+				A56710972C0067770020B17A /* SpiltBillWatch Watch App */,
+				A5E88E2A2BC9E617009F0D1A /* Products */,
+				A5E88E4B2BC9E800009F0D1A /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A5E88E2A2BC9E617009F0D1A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A5E88E292BC9E617009F0D1A /* SpiltBill.app */,
+				A56710962C0067760020B17A /* SpiltBillWatch Watch App.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A5E88E2B2BC9E617009F0D1A /* SpiltBill */ = {
+			isa = PBXGroup;
+			children = (
+				A514F8CA2BFF3C86005FE01B /* Info.plist */,
+				A514F8B92BFF39A4005FE01B /* SpiltBill.entitlements */,
+				A5E88E3A2BC9E6DE009F0D1A /* GoogleService-Info.plist */,
+				A5E88E2C2BC9E617009F0D1A /* SpiltBillApp.swift */,
+				A5E0F5DE2BD2FABA00453E74 /* DeviceCheckProvider.swift */,
+				A5E88E2E2BC9E617009F0D1A /* ContentView.swift */,
+				A5E88E512BCA7540009F0D1A /* Models */,
+				A5E88E502BCA751A009F0D1A /* Views */,
+				A5E88E302BC9E618009F0D1A /* Assets.xcassets */,
+				A5E88E322BC9E618009F0D1A /* Preview Content */,
+			);
+			path = SpiltBill;
+			sourceTree = "<group>";
+		};
+		A5E88E322BC9E618009F0D1A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				A5E88E332BC9E618009F0D1A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A5E88E4B2BC9E800009F0D1A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A56710C32C00795F0020B17A /* WatchConnectivity.framework */,
+				A56710C12C0079560020B17A /* WatchConnectivity.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A5E88E502BCA751A009F0D1A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A5E0F5E72BD6465700453E74 /* ExpenseViews */,
+				A5E0F5E62BD6464800453E74 /* FriendsViews */,
+				A5E0F5E42BD6446E00453E74 /* Profile.swift */,
+				A5E88E472BC9E77D009F0D1A /* AuthenticationView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A5E88E512BCA7540009F0D1A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A5E88E522BCA755B009F0D1A /* BasicModels.swift */,
+				A5E88E542BCA794B009F0D1A /* DataStore.swift */,
+				A590EE182BE0B31200CD4627 /* ImagePicker.swift */,
+				A590EE1A2BE0B32F00CD4627 /* TextRecognizer.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A56710952C0067760020B17A /* SpiltBillWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A56710A42C0067780020B17A /* Build configuration list for PBXNativeTarget "SpiltBillWatch Watch App" */;
+			buildPhases = (
+				A56710922C0067760020B17A /* Sources */,
+				A56710932C0067760020B17A /* Frameworks */,
+				A56710942C0067760020B17A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SpiltBillWatch Watch App";
+			productName = "SpiltBillWatch Watch App";
+			productReference = A56710962C0067760020B17A /* SpiltBillWatch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A5E88E282BC9E617009F0D1A /* SpiltBill */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5E88E372BC9E618009F0D1A /* Build configuration list for PBXNativeTarget "SpiltBill" */;
+			buildPhases = (
+				A5E88E252BC9E617009F0D1A /* Sources */,
+				A5E88E262BC9E617009F0D1A /* Frameworks */,
+				A5E88E272BC9E617009F0D1A /* Resources */,
+				A522EFF02BFAC18100D8B76C /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A56710A22C0067780020B17A /* PBXTargetDependency */,
+			);
+			name = SpiltBill;
+			packageProductDependencies = (
+				A56710AA2C006BD30020B17A /* FirebaseAppCheck */,
+				A56710AC2C006BD70020B17A /* FirebaseAuth */,
+				A56710AE2C006BDF0020B17A /* FirebaseFirestore */,
+				A56710B02C006BE70020B17A /* FirebaseStorage */,
+			);
+			productName = SpiltBill;
+			productReference = A5E88E292BC9E617009F0D1A /* SpiltBill.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A5E88E212BC9E617009F0D1A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
+				TargetAttributes = {
+					A56710952C0067760020B17A = {
+						CreatedOnToolsVersion = 15.2;
+					};
+					A5E88E282BC9E617009F0D1A = {
+						CreatedOnToolsVersion = 15.2;
+					};
+				};
+			};
+			buildConfigurationList = A5E88E242BC9E617009F0D1A /* Build configuration list for PBXProject "SpiltBill" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A5E88E202BC9E617009F0D1A;
+			packageReferences = (
+				A5E88E3C2BC9E70C009F0D1A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			productRefGroup = A5E88E2A2BC9E617009F0D1A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A5E88E282BC9E617009F0D1A /* SpiltBill */,
+				A56710952C0067760020B17A /* SpiltBillWatch Watch App */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A56710942C0067760020B17A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A56710A02C0067780020B17A /* Preview Assets.xcassets in Resources */,
+				A56710CC2C013BB30020B17A /* Preview.MP4 in Resources */,
+				A567109D2C0067780020B17A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5E88E272BC9E617009F0D1A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5E88E342BC9E618009F0D1A /* Preview Assets.xcassets in Resources */,
+				A5E88E312BC9E618009F0D1A /* Assets.xcassets in Resources */,
+				A5E88E3B2BC9E6DE009F0D1A /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A56710922C0067760020B17A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A56710C02C0071F20020B17A /* ExpenseDetailView.swift in Sources */,
+				A567109B2C0067770020B17A /* ContentView.swift in Sources */,
+				A56710B62C006F8D0020B17A /* WatchDataStore.swift in Sources */,
+				A56710BA2C0071B30020B17A /* FriendListView.swift in Sources */,
+				A56710B72C006F9B0020B17A /* BasicModels.swift in Sources */,
+				A56710992C0067770020B17A /* SpiltBillWatchApp.swift in Sources */,
+				A56710BC2C0071CA0020B17A /* FriendDetailView.swift in Sources */,
+				A56710BE2C0071DF0020B17A /* ExpenseListView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5E88E252BC9E617009F0D1A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5E0F5F02BDBFB1700453E74 /* AddExpense.swift in Sources */,
+				A5E88E4F2BCA74EA009F0D1A /* FriendTable.swift in Sources */,
+				A5E88E2F2BC9E617009F0D1A /* ContentView.swift in Sources */,
+				A590EE192BE0B31200CD4627 /* ImagePicker.swift in Sources */,
+				A5E88E2D2BC9E617009F0D1A /* SpiltBillApp.swift in Sources */,
+				A57075EC2BF2BB9800839A86 /* ExpenseDetailView.swift in Sources */,
+				A5E88E532BCA755B009F0D1A /* BasicModels.swift in Sources */,
+				A590EE172BE0B2D100CD4627 /* OCRView.swift in Sources */,
+				A5E88E482BC9E77D009F0D1A /* AuthenticationView.swift in Sources */,
+				A5E0F5F22BDBFFB700453E74 /* ParticipantSearchView.swift in Sources */,
+				A5E0F5EE2BDBF96800453E74 /* ExpenseTable.swift in Sources */,
+				A5E0F5DF2BD2FABA00453E74 /* DeviceCheckProvider.swift in Sources */,
+				A5E88E552BCA794B009F0D1A /* DataStore.swift in Sources */,
+				A5E0F5E52BD6446E00453E74 /* Profile.swift in Sources */,
+				A5E88E592BCB89CD009F0D1A /* FriendDetailView.swift in Sources */,
+				A590EE1B2BE0B32F00CD4627 /* TextRecognizer.swift in Sources */,
+				A5E0F5E92BD6468100453E74 /* AddFriends.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A56710A22C0067780020B17A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A56710952C0067760020B17A /* SpiltBillWatch Watch App */;
+			targetProxy = A56710A12C0067780020B17A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A56710A52C0067780020B17A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "SpiltBillWatch Watch App/SpiltBillWatch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SpiltBillWatch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 85865B2DBQ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = SpiltBillWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.company.product.SpiltBill;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.company.product.SpiltBill.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		A56710A62C0067780020B17A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "SpiltBillWatch Watch App/SpiltBillWatch Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SpiltBillWatch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = 85865B2DBQ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = SpiltBillWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.company.product.SpiltBill;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.company.product.SpiltBill.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+		A5E88E352BC9E618009F0D1A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		A5E88E362BC9E618009F0D1A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
+		A5E88E382BC9E618009F0D1A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SpiltBill/SpiltBill.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SpiltBill/Preview Content\"";
+				DEVELOPMENT_TEAM = 85865B2DBQ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpiltBill/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan receipts.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.company.product.SpiltBill;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A5E88E392BC9E618009F0D1A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SpiltBill/SpiltBill.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SpiltBill/Preview Content\"";
+				DEVELOPMENT_TEAM = 85865B2DBQ;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpiltBill/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app requires camera access to scan receipts.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.company.product.SpiltBill;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A56710A42C0067780020B17A /* Build configuration list for PBXNativeTarget "SpiltBillWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A56710A52C0067780020B17A /* Debug */,
+				A56710A62C0067780020B17A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5E88E242BC9E617009F0D1A /* Build configuration list for PBXProject "SpiltBill" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5E88E352BC9E618009F0D1A /* Debug */,
+				A5E88E362BC9E618009F0D1A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5E88E372BC9E618009F0D1A /* Build configuration list for PBXNativeTarget "SpiltBill" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5E88E382BC9E618009F0D1A /* Debug */,
+				A5E88E392BC9E618009F0D1A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A5E88E3C2BC9E70C009F0D1A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.24.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A56710AA2C006BD30020B17A /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5E88E3C2BC9E70C009F0D1A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
+		};
+		A56710AC2C006BD70020B17A /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5E88E3C2BC9E70C009F0D1A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		A56710AE2C006BDF0020B17A /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5E88E3C2BC9E70C009F0D1A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		A56710B02C006BE70020B17A /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5E88E3C2BC9E70C009F0D1A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = A5E88E212BC9E617009F0D1A /* Project object */;
+}
