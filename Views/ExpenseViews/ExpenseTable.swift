@@ -4,8 +4,10 @@
 //
 //  Created by Jason Ze on 2024/4/26.
 //
+
 import SwiftUI
 
+/// A SwiftUI view that displays a list of expenses.
 struct ExpenseTable: View {
     @EnvironmentObject var dataStore: DataStore
     @State private var showingAddExpenseView = false
@@ -15,6 +17,7 @@ struct ExpenseTable: View {
         NavigationView {
             VStack {
                 if dataStore.expenses.isEmpty {
+                    // Display a message and icon when there are no expenses
                     VStack {
                         Image(systemName: "doc.text.magnifyingglass")
                             .resizable()
@@ -27,6 +30,7 @@ struct ExpenseTable: View {
                     }
                     .padding()
                 } else {
+                    // List expenses if available
                     List {
                         ForEach(dataStore.expenses) { expense in
                             ExpenseRow(expense: expense)
@@ -47,27 +51,33 @@ struct ExpenseTable: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {
+                        // Button to refresh the list of expenses
                         Button(action: refreshExpenses) {
                             Image(systemName: "arrow.clockwise")
                         }
+                        // Button to show the add expense view
                         Button(action: { showingAddExpenseView = true }) {
                             Image(systemName: "plus")
                         }
+                        // Button to show the OCR view
                         Button(action: { showingOCRView = true }) {
                             Image(systemName: "camera")
                         }
                     }
                 }
             }
+            // Present the add expense view when showingAddExpenseView is true
             .sheet(isPresented: $showingAddExpenseView) {
                 AddExpense().environmentObject(dataStore)
             }
+            // Present the OCR view when showingOCRView is true
             .sheet(isPresented: $showingOCRView) {
                 OCRView().environmentObject(dataStore)
             }
         }
     }
 
+    /// Refreshes the list of expenses by fetching them from the data store.
     private func refreshExpenses() {
         dataStore.fetchExpenses { fetchedExpenses in
             DispatchQueue.main.async {
@@ -76,6 +86,8 @@ struct ExpenseTable: View {
         }
     }
 
+    /// Deletes the selected expense.
+    /// - Parameter offsets: The index set of expenses to delete.
     private func deleteExpense(at offsets: IndexSet) {
         offsets.forEach { index in
             let expenseID = dataStore.expenses[index].id
@@ -93,6 +105,7 @@ struct ExpenseTable: View {
     }
 }
 
+/// A SwiftUI view that represents a single row in the list of expenses.
 struct ExpenseRow: View {
     var expense: Expense
     @EnvironmentObject var dataStore: DataStore
@@ -112,9 +125,7 @@ struct ExpenseRow: View {
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
-
             }
         }
-       
     }
 }

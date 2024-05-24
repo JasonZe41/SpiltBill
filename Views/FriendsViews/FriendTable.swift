@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A SwiftUI view that displays a list of friends and provides options to add or delete friends.
 struct FriendTable: View {
     @EnvironmentObject var dataStore: DataStore
     @State private var showingAddFriendView = false
@@ -15,10 +16,12 @@ struct FriendTable: View {
     var body: some View {
         NavigationView {
             List {
+                // Loop through the friends in the dataStore and create a row for each friend.
                 ForEach(dataStore.friends) { friend in
                     FriendRow(friend: friend)
                         .environmentObject(dataStore)
                 }
+                // Enable deletion of friends.
                 .onDelete(perform: deleteFriend)
             }
             .refreshable {
@@ -26,6 +29,7 @@ struct FriendTable: View {
             }
             .navigationTitle("Friends")
             .toolbar {
+                // Add a refresh button to the navigation bar.
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
                         dataStore.fetchFriends() // Refresh the list of friends
@@ -33,6 +37,7 @@ struct FriendTable: View {
                         Image(systemName: "arrow.clockwise")
                     }
                 }
+                // Add a button to present the AddFriend view.
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { showingAddFriendView = true }) {
                         Label("Add Friend", systemImage: "plus")
@@ -45,6 +50,8 @@ struct FriendTable: View {
         }
     }
 
+    /// Deletes a friend from the dataStore.
+    /// - Parameter offsets: The index set of the friend to be deleted.
     private func deleteFriend(at offsets: IndexSet) {
         offsets.forEach { index in
             let friendID = dataStore.friends[index].friendshipID
@@ -63,6 +70,7 @@ struct FriendTable: View {
     }
 }
 
+/// A SwiftUI view that represents a single row in the FriendTable.
 struct FriendRow: View {
     var friend: Participant
     @EnvironmentObject var dataStore: DataStore
@@ -81,7 +89,6 @@ struct FriendRow: View {
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
-            
             }
         }
     }

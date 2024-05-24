@@ -13,8 +13,9 @@ import FirebaseStorage
 #endif
 import WatchConnectivity
 
+/// DataStore is a class that handles data operations and synchronization with Firestore and WatchConnectivity.
 class DataStore: NSObject, ObservableObject, WCSessionDelegate {
-
+    
     private var db = Firestore.firestore()
     private var storage = Storage.storage()
 
@@ -22,23 +23,23 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
     @Published var friends: [Participant] = []
     @Published var currentUser: Participant?
 
-    /// Initializes the `DataStore` instance and fetch the groups, expenses, and friends from Firestore
+    /// Initializes the `DataStore` instance and fetches the groups, expenses, and friends from Firestore
     override init() {
         super.init()
         initializeWatchConnectivity()
         fetchDataAndSendToWatch()
     }
     
+    /// Initializes WatchConnectivity if supported.
     private func initializeWatchConnectivity() {
-            if WCSession.isSupported() {
-                let session = WCSession.default
-                session.delegate = self
-                session.activate()
-            }
+        if WCSession.isSupported() {
+            let session = WCSession.default
+            session.delegate = self
+            session.activate()
         }
-    
-    
-    
+    }
+
+    /// Fetches current user, expenses, and friends, then sends the data to the watch if available.
     private func fetchDataAndSendToWatch() {
         fetchCurrentUser { user in
             DispatchQueue.main.async {
@@ -57,33 +58,35 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
+    /// Checks if the WatchConnectivity session is activated and sends the data to the watch if all data is available.
     private func checkAndSendDataToWatch() {
-            guard WCSession.default.activationState == .activated else {
-                print("WCSession is not activated yet.")
-                return
-            }
-
-            // Ensure all data is fetched before sending
-            guard !expenses.isEmpty, !friends.isEmpty, let currentUser = currentUser else {
-                print("Data is not ready yet. Expenses: \(expenses.count), Friends: \(friends.count), Current User: \(String(describing: currentUser))")
-                return
-            }
-
-            sendDataToWatch()
+        guard WCSession.default.activationState == .activated else {
+            print("WCSession is not activated yet.")
+            return
         }
+
+        // Ensure all data is fetched before sending
+        guard !expenses.isEmpty, !friends.isEmpty, let currentUser = currentUser else {
+            print("Data is not ready yet. Expenses: \(expenses.count), Friends: \(friends.count), Current User: \(String(describing: currentUser))")
+            return
+        }
+
+        sendDataToWatch()
+    }
     
-    
-    
+    /// Retrieves the current user ID from UserDefaults.
     private func getCurrentUserID() -> String? {
         UserDefaults.standard.string(forKey: "userId")
     }
     
+    /// Logs out the current user by clearing their user defaults and setting the currentUser property to nil.
     func logout() {
-        // Clear user defaults or any other storage used for user session
         UserDefaults.standard.removeObject(forKey: "userId")
         currentUser = nil
     }
     
+    /// Fetches the current user's information from Firestore.
+    /// - Parameter completion: A closure that gets called with the fetched Participant or nil if an error occurred.
     func fetchCurrentUser(completion: @escaping (Participant?) -> Void) {
         guard let userID = getCurrentUserID() else {
             print("User ID not available")
@@ -114,6 +117,8 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
     
     // MARK: - Expenses Operation (fetch, add, delete, or update)
 
+    /// Fetches all expenses associated with the current user.
+    /// - Parameter completion: A closure that gets called with an array of fetched Expense objects.
     func fetchExpenses(completion: @escaping ([Expense]) -> Void) {
         guard let currentUserID = getCurrentUserID() else {
             print("User ID not available")
@@ -124,7 +129,7 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         let userRef = db.collection("User").document(currentUserID)
         let participationsRef = db.collection("ExpenseParticipations")
         
-        // Looking through ExpenseParticipations collection to find all expense involved with the current user
+        // Looking through ExpenseParticipations collection to find all expenses involving the current user
         participationsRef.whereField("UserID", isEqualTo: userRef).getDocuments { [weak self] (querySnapshot, error) in
             guard let documents = querySnapshot?.documents, !documents.isEmpty, error == nil else {
                 print("No expense participations found or error: \(error?.localizedDescription ?? "Unknown error")")
@@ -139,6 +144,10 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         self.sendDataToWatch()
     }
 
+    /// Fetches details for a list of expense IDs.
+    /// - Parameters:
+    ///   - expenseIDs: An array of expense IDs to fetch details for.
+    ///   - completion: A closure that gets called with an array of fetched Expense objects.
     private func fetchExpenseDetails(fromIDs expenseIDs: [String], completion: @escaping ([Expense]) -> Void) {
         let expensesRef = db.collection("Expense")
         var expenses = [Expense]()
@@ -165,6 +174,11 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
+    /// Constructs an Expense object from Firestore data.
+    /// - Parameters:
+    ///   - data: A dictionary containing the expense data from Firestore.
+    ///   - documentID: The document ID of the expense.
+    ///   - completion: A closure that gets called with the constructed Expense object.
     private func constructExpense(from data: [String: Any], documentID: String, completion: @escaping (Expense) -> Void) {
         let description = data["Description"] as? String ?? "No Description"
         let totalAmount = data["TotalAmount"] as? Double ?? 0.0
@@ -246,6 +260,10 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
+    /// Uploads an image to Firebase Storage.
+    /// - Parameters:
+    ///   - image: The UIImage to upload.
+    ///   - completion: A closure that gets called with the result of the upload, either a URL or an Error.
     func uploadImage(_ image: UIImage, completion: @escaping (Result<URL, Error>) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             completion(.failure(NSError(domain: "ImageError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert image to data."])))
@@ -277,6 +295,16 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
+    /// Adds a new expense to Firestore.
+    /// - Parameters:
+    ///   - description: The description of the expense.
+    ///   - totalAmount: The total amount of the expense.
+    ///   - participants: A list of participants involved in the expense.
+    ///   - payer: The participant who paid for the expense.
+    ///   - splitType: The type of split for the expense.
+    ///   - paymentDetails: A list of payment details for the expense.
+    ///   - imageURL: An optional URL for the receipt image.
+    ///   - completion: A closure that gets called with the result of the operation, either success or failure.
     func addExpense(description: String, totalAmount: Double, participants: [Participant], payer: Participant, splitType: SplitType, paymentDetails: [PaymentDetail], imageURL: URL?, completion: @escaping (Result<Void, Error>) -> Void) {
         let newExpenseRef = db.collection("Expense").document()
         let payerRef = db.collection("User").document(payer.id)
@@ -329,6 +357,10 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
+    /// Deletes an expense from Firestore.
+    /// - Parameters:
+    ///   - expenseID: The ID of the expense to delete.
+    ///   - completion: A closure that gets called with the result of the operation, either success or failure.
     func deleteExpense(expenseID: String, completion: @escaping (Bool, Error?) -> Void) {
         let expenseRef = db.collection("Expense").document(expenseID)
 
@@ -351,6 +383,10 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
+    /// Deletes all participations for a specific expense.
+    /// - Parameters:
+    ///   - expenseID: The ID of the expense.
+    ///   - completion: A closure that gets called with the result of the operation, either success or failure.
     private func deleteParticipations(for expenseID: String, completion: @escaping (Bool, Error?) -> Void) {
         let participationsRef = db.collection("ExpenseParticipations")
 
@@ -379,6 +415,8 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
 
     // MARK: - Friends Operation (fetch, add, delete)
 
+    /// Fetches the list of friends for the current user from Firestore.
+    /// - Parameter completion: A closure that gets called when the fetching is complete.
     func fetchFriends(completion: @escaping () -> Void = {}) {
         guard let currentUserID = getCurrentUserID() else {
             print("User ID not available")
@@ -412,6 +450,12 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         self.sendDataToWatch()
     }
 
+    /// Fetches friendship documents for a given user reference.
+    /// - Parameters:
+    ///   - userRef: The DocumentReference of the user.
+    ///   - fromField: The field in the friendship document that holds the user reference.
+    ///   - targetField: The field in the friendship document that holds the friend's reference.
+    ///   - completion: A closure that gets called when the fetching is complete.
     private func fetchFriendships(forUserRef userRef: DocumentReference, fromField: String, targetField: String, completion: @escaping () -> Void = {}) {
         let friendsRef = db.collection("Friends")
         friendsRef.whereField(fromField, isEqualTo: userRef).getDocuments { [weak self] querySnapshot, error in
@@ -435,6 +479,11 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
+    /// Processes a friendship document to extract friend details.
+    /// - Parameters:
+    ///   - document: The friendship document snapshot.
+    ///   - targetField: The field in the friendship document that holds the friend's reference.
+    ///   - friendshipID: The ID of the friendship document.
     private func processFriendship(_ document: QueryDocumentSnapshot, targetField: String, friendshipID: String) {
         guard let friendRef = document.get(targetField) as? DocumentReference else { return }
 
@@ -463,6 +512,10 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
+    /// Searches for a user by phone number or email and adds them as a friend if found.
+    /// - Parameters:
+    ///   - phoneNumberOrEmail: The phone number or email of the user to search for.
+    ///   - completion: A closure that gets called with the result of the operation, either success or failure.
     func searchUser(phoneNumberOrEmail: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         let usersRef = db.collection("User")
 
@@ -511,6 +564,10 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
+    /// Adds a friendship document to Firestore for the current user and the specified friend.
+    /// - Parameters:
+    ///   - friendUserID: The ID of the user to add as a friend.
+    ///   - completion: A closure that gets called with the result of the operation, either success or failure.
     func addFriendship(with friendUserID: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         guard let currentUserID = getCurrentUserID() else {
             completion(.failure(NSError(domain: "DataStoreError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Unable to fetch current user ID."])))
@@ -536,6 +593,10 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
     
+    /// Deletes a friendship document from Firestore.
+    /// - Parameters:
+    ///   - friendshipID: The ID of the friendship document to delete.
+    ///   - completion: A closure that gets called with the result of the operation, either success or failure.
     func deleteFriend(friendshipID: String, completion: @escaping (Result<Bool, Error>) -> Void) {
         let friendsRef = db.collection("Friends")
         let friendshipRef = friendsRef.document(friendshipID)
@@ -553,6 +614,8 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
             }
         }
     }
+
+    /// Sends the current user's data, expenses, and friends to the watch.
     private func sendDataToWatch() {
         guard WCSession.default.activationState == .activated else {
             print("WCSession is not activated")
@@ -589,9 +652,13 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
-    
-    
-    // Implement WCSessionDelegate methods
+    // MARK: - WCSessionDelegate methods
+
+    /// Called when the WatchConnectivity session activation completes.
+    /// - Parameters:
+    ///   - session: The WatchConnectivity session.
+    ///   - activationState: The state of the session activation.
+    ///   - error: An optional error if the activation failed.
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         if let error = error {
             print("WCSession activation failed with error: \(error.localizedDescription)")
@@ -601,10 +668,14 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate {
         }
     }
 
+    /// Called when the WatchConnectivity session becomes inactive.
+    /// - Parameter session: The WatchConnectivity session.
     func sessionDidBecomeInactive(_ session: WCSession) {
         // Handle session inactivity
     }
     
+    /// Called when the WatchConnectivity session deactivates.
+    /// - Parameter session: The WatchConnectivity session.
     func sessionDidDeactivate(_ session: WCSession) {
         // Handle session deactivation
         session.activate()

@@ -6,12 +6,14 @@
 //
 import SwiftUI
 
+/// A SwiftUI view that displays the details of a friend's expenses.
 struct FriendDetailView: View {
     @EnvironmentObject var dataStore: DataStore
     var friend: Participant
 
     var body: some View {
         VStack {
+            // List of shared expenses between the current user and the friend.
             List {
                 ForEach(sharedExpenses(), id: \.id) { expense in
                     VStack(alignment: .leading, spacing: 10) {
@@ -34,6 +36,7 @@ struct FriendDetailView: View {
                         Divider()
                         Text("Participants:")
                             .fontWeight(.bold)
+                        // Display only the relevant payment details.
                         ForEach(expense.paymentDetails?.filter { $0.participantID == friend.id || $0.participantID == dataStore.currentUser?.id } ?? [], id: \.participantID) { detail in
                             Text("\(dataStore.participantName(for: detail.participantID)): \(detail.amount, specifier: "%.2f")")
                                 .foregroundColor(.gray)
@@ -54,6 +57,7 @@ struct FriendDetailView: View {
         }
     }
 
+    /// Returns a list of expenses shared between the current user and the friend.
     private func sharedExpenses() -> [Expense] {
         guard let currentUserID = dataStore.currentUser?.id else { return [] }
 
@@ -67,6 +71,7 @@ struct FriendDetailView: View {
         }
     }
 
+    /// Calculates the net balance between the current user and the friend.
     private func calculateNetBalance() -> Double {
         guard let currentUserID = dataStore.currentUser?.id else { return 0.0 }
 
@@ -87,6 +92,9 @@ struct FriendDetailView: View {
 }
 
 extension DataStore {
+    /// Returns the name of a participant given their ID.
+    /// - Parameter id: The ID of the participant.
+    /// - Returns: The name of the participant or "Unknown" if not found.
     func participantName(for id: String) -> String {
         friends.first { $0.id == id }?.Name ?? "Unknown"
     }

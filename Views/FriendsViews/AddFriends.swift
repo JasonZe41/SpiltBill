@@ -6,6 +6,7 @@
 //
 import SwiftUI
 
+/// A SwiftUI view for adding new friends by searching for them using their phone number or email.
 struct AddFriends: View {
     @EnvironmentObject var dataStore: DataStore
     @Environment(\.dismiss) var dismiss
@@ -13,7 +14,7 @@ struct AddFriends: View {
     @State private var phoneNumberOrEmail: String = ""
     @State private var showingAlert = false
     @State private var alertMessage = ""
-    
+
     var body: some View {
         NavigationView {
             Form {
@@ -27,7 +28,7 @@ struct AddFriends: View {
                         .background(Color(.systemGray6))
                         .cornerRadius(10)
                 }
-                
+
                 Button(action: searchForUser) {
                     Text("Search")
                         .frame(maxWidth: .infinity)
@@ -53,6 +54,8 @@ struct AddFriends: View {
         }
     }
     
+    /// Searches for a user by their phone number or email.
+    /// If found, adds them as a friend. Otherwise, shows an alert message.
     private func searchForUser() {
         dataStore.searchUser(phoneNumberOrEmail: phoneNumberOrEmail) { result in
             switch result {
@@ -72,6 +75,4 @@ struct AddFriends: View {
     }
 }
 
-#Preview {
-    AddFriends()
-}
+

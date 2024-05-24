@@ -4,12 +4,15 @@
 //
 //  Created by Jason Ze on 2024/5/13.
 //
+
 import SwiftUI
 
+/// A SwiftUI view to display the details of a specific expense.
 struct ExpenseDetailView: View {
     @EnvironmentObject var dataStore: DataStore
     var expenseId: String
 
+    /// Retrieves the expense object based on the provided expense ID.
     private var expense: Expense? {
         dataStore.expenses.first { $0.id == expenseId }
     }
@@ -17,9 +20,11 @@ struct ExpenseDetailView: View {
     var body: some View {
         List {
             if let expense = expense {
+                // Display expense details and participants sections.
                 expenseDetailsSection(expense: expense)
                 participantsSection(expense: expense)
             } else {
+                // Display an error message if the expense details are not found.
                 Text("Expense details not found.")
                     .foregroundColor(.red)
             }
@@ -28,6 +33,8 @@ struct ExpenseDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
+    /// A view builder method to display the expense details section.
+    /// - Parameter expense: The expense object containing details to display.
     @ViewBuilder
     private func expenseDetailsSection(expense: Expense) -> some View {
         Section(header: Text("Expense Details").font(.headline)) {
@@ -63,6 +70,8 @@ struct ExpenseDetailView: View {
         .padding(.vertical, 10)
     }
 
+    /// A view builder method to display the participants section.
+    /// - Parameter expense: The expense object containing participants details.
     @ViewBuilder
     private func participantsSection(expense: Expense) -> some View {
         Section(header: Text("Participants").font(.headline)) {
@@ -70,6 +79,7 @@ struct ExpenseDetailView: View {
                 if let participant = expense.participants.first(where: { $0.id == detail.participantID }) {
                     ParticipantDetailRow(participant: participant, amount: detail.amount)
                 } else {
+                    // Display an error message if participant details are not available.
                     Text("Participant details not available.")
                         .foregroundColor(.red)
                 }
@@ -78,6 +88,7 @@ struct ExpenseDetailView: View {
         .padding(.vertical, 10)
     }
 
+    /// Date formatter to format the date display.
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -86,6 +97,7 @@ struct ExpenseDetailView: View {
     }
 }
 
+/// A SwiftUI view to display a participant's details in the expense.
 struct ParticipantDetailRow: View {
     var participant: Participant
     var amount: Double

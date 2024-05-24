@@ -6,6 +6,7 @@
 //
 import SwiftUI
 
+/// A view representing the user's profile page, displaying user information and allowing the user to log out.
 struct ProfileView: View {
     @EnvironmentObject var dataStore: DataStore
     @Binding var isAuthenticated: Bool
@@ -52,12 +53,14 @@ struct ProfileView: View {
         }
     }
 
+    /// Logs out the current user and updates the authentication state.
     private func logout() {
         dataStore.logout()
         isAuthenticated = false
     }
 }
 
+/// A subview that displays the user's information in a form-like layout.
 struct UserInformationView: View {
     var participant: Participant
 

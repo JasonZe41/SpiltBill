@@ -1,6 +1,13 @@
-// AddExpense.swift
+//
+//  AddExpense.swift
+//  SpiltBill
+//
+//  Created by Jason Ze on 2024/4/30.
+//
+
 import SwiftUI
 
+/// A SwiftUI view for adding a new expense.
 struct AddExpense: View {
     @EnvironmentObject var dataStore: DataStore
     @Environment(\.dismiss) var dismiss
@@ -18,6 +25,11 @@ struct AddExpense: View {
     @State private var showingAlert = false
     @State private var alertMessage = ""
 
+    /// Initializes the AddExpense view with optional initial values.
+    /// - Parameters:
+    ///   - description: The initial description for the expense.
+    ///   - totalAmount: The initial total amount for the expense.
+    ///   - receiptImage: The initial receipt image for the expense.
     init(description: String = "", totalAmount: String = "", receiptImage: UIImage? = nil) {
         _description = State(initialValue: description)
         _totalAmount = State(initialValue: totalAmount)
@@ -87,7 +99,7 @@ struct AddExpense: View {
                     }
                     .disabled(description.isEmpty || totalAmount.isEmpty || payer == nil || participants.isEmpty)
                 }
-                
+
                 Section {
                     if let payer = payer {
                         Button("Pay with Venmo") {
@@ -137,6 +149,7 @@ struct AddExpense: View {
         }
     }
 
+    /// Adds a new expense by validating inputs and uploading image if provided.
     private func addNewExpense() {
         guard let totalAmountDouble = Double(totalAmount),
               let payer = payer,
@@ -161,6 +174,12 @@ struct AddExpense: View {
         }
     }
 
+    /// Adds the expense data to the data store.
+    /// - Parameters:
+    ///   - imageURL: The URL of the uploaded receipt image.
+    ///   - details: The payment details for the expense.
+    ///   - totalAmountDouble: The total amount of the expense.
+    ///   - payer: The payer of the expense.
     private func addExpenseToDataStore(imageURL: URL?, details: [PaymentDetail], totalAmountDouble: Double, payer: Participant) {
         dataStore.addExpense(description: description, totalAmount: totalAmountDouble, participants: participants, payer: payer, splitType: splitType, paymentDetails: details, imageURL: imageURL) { result in
             DispatchQueue.main.async {
@@ -179,12 +198,16 @@ struct AddExpense: View {
         }
     }
 
+    /// Opens the Venmo app to pay the expense.
     private func openVenmo() {
         let venmoURL = "venmo://paycharge?txn=pay&recipients=\(payer?.PhoneNumber ?? "")&amount=\(totalAmount)&note=Splitting bill for \(description)"
         guard let url = URL(string: venmoURL) else { return }
         UIApplication.shared.open(url)
     }
 
+    /// Prepares the payment details based on the selected split type.
+    /// - Parameter totalAmount: The total amount of the expense.
+    /// - Returns: An array of PaymentDetail objects if successful, otherwise nil.
     private func preparePaymentDetails(totalAmount: Double) -> [PaymentDetail]? {
         var details = [PaymentDetail]()
 

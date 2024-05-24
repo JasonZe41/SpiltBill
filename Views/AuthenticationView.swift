@@ -4,9 +4,11 @@
 //
 //  Created by Jason Ze on 2024/4/12.
 //
+
 import SwiftUI
 import Firebase
 
+/// A view that provides authentication functionality, allowing users to sign up or log in.
 struct AuthenticationView: View {
     @State private var name = ""
     @State private var phoneNumber = ""
@@ -19,6 +21,7 @@ struct AuthenticationView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
+                // Sign Up specific fields
                 if isSignUp {
                     TextField("Name", text: $name)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -29,6 +32,7 @@ struct AuthenticationView: View {
                         .keyboardType(.phonePad)
                 }
                 
+                // Common fields
                 TextField("Email", text: $email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .autocapitalization(.none)
@@ -37,11 +41,13 @@ struct AuthenticationView: View {
                 SecureField("Password", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 
+                // Display error message if any
                 if let errorMessage = errorMessage {
                     Text(errorMessage)
                         .foregroundColor(.red)
                 }
                 
+                // Action button (Log In or Sign Up)
                 Button(action: {
                     if isSignUp {
                         signUp()
@@ -59,6 +65,7 @@ struct AuthenticationView: View {
                         .shadow(radius: 5)
                 }
                 
+                // Switch between Log In and Sign Up
                 Button(action: {
                     isSignUp.toggle()
                 }) {
@@ -74,6 +81,7 @@ struct AuthenticationView: View {
         }
     }
 
+    /// Logs in the user with the provided email and password.
     private func logIn() {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -88,6 +96,7 @@ struct AuthenticationView: View {
         }
     }
 
+    /// Signs up the user with the provided details, including additional info saved to Firestore.
     private func signUp() {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -113,6 +122,7 @@ struct AuthenticationView: View {
         }
     }
     
+    /// Stores the user ID in UserDefaults for session persistence.
     private func storeUserId(userId: String) {
         UserDefaults.standard.set(userId, forKey: "userId")
     }

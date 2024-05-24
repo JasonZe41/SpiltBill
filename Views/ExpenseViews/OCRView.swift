@@ -4,10 +4,12 @@
 //
 //  Created by Jason Ze on 2024/4/30.
 //
+
 import SwiftUI
 import Vision
 import VisionKit
 
+/// A SwiftUI view for OCR (Optical Character Recognition) functionality to scan and process receipts.
 struct OCRView: View {
     @EnvironmentObject var dataStore: DataStore
     @Environment(\.dismiss) var dismiss
@@ -23,6 +25,7 @@ struct OCRView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
+                // Display the selected image
                 if let inputImage = inputImage {
                     Image(uiImage: inputImage)
                         .resizable()
@@ -32,11 +35,13 @@ struct OCRView: View {
                         .padding()
                 }
 
+                // Text editor to display recognized text
                 TextEditor(text: $recognizedText)
                     .padding()
                     .frame(height: 200)
                     .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
 
+                // Display store name
                 HStack {
                     Text("Store: ")
                         .font(.headline)
@@ -47,6 +52,7 @@ struct OCRView: View {
                 }
                 .padding(.horizontal)
 
+                // Display total amount
                 HStack {
                     Text("Total: ")
                         .font(.headline)
@@ -59,6 +65,7 @@ struct OCRView: View {
 
                 Spacer()
 
+                // Button to process the image
                 Button(action: processImage) {
                     Text("Process Image")
                         .bold()
@@ -70,6 +77,7 @@ struct OCRView: View {
                 }
                 .disabled(inputImage == nil)
 
+                // Button to navigate to AddExpense view
                 Button(action: {
                     let cleanedTotalAmount = cleanAmount(totalAmount)
                     navigateToAddExpense = true
@@ -123,18 +131,22 @@ struct OCRView: View {
         }
     }
 
+    /// Loads the selected image and recognizes text from it.
     private func loadImage() {
         if let inputImage = inputImage {
             recognizeTextFromImage(inputImage)
         }
     }
 
+    /// Processes the selected image to recognize text.
     private func processImage() {
         if let inputImage = inputImage {
             recognizeTextFromImage(inputImage)
         }
     }
 
+    /// Uses Vision framework to recognize text from a given image.
+    /// - Parameter image: The image from which text will be recognized.
     private func recognizeTextFromImage(_ image: UIImage) {
         let recognizer = TextRecognizer()
         recognizer.recognizeTextFromImage(image) { lines in
@@ -145,6 +157,8 @@ struct OCRView: View {
         }
     }
 
+    /// Parses recognized text lines to extract store name and total amount.
+    /// - Parameter lines: The lines of recognized text.
     private func parseRecognizedText(_ lines: [String]) {
         var storeNameFound = false
         var totalAmountFound = false
@@ -166,6 +180,9 @@ struct OCRView: View {
         }
     }
 
+    /// Detects the store name from a line of text.
+    /// - Parameter line: A line of recognized text.
+    /// - Returns: The detected store name if found.
     private func detectStoreName(in line: String) -> String? {
         let knownStores = ["Trader Joe's", "Costco", "Walmart", "Target", "Restaurant"]
         for store in knownStores {
@@ -176,19 +193,25 @@ struct OCRView: View {
         return nil
     }
 
+    /// Detects the total amount from a line of text.
+    /// - Parameter line: A line of recognized text.
+    /// - Returns: The detected total amount if found.
     private func detectTotalAmount(in line: String) -> String? {
         let pattern = "\\$\\s*\\d+(\\.\\d{2})?"
-           let regex = try? NSRegularExpression(pattern: pattern, options: [])
-           
-           guard let matches = regex?.matches(in: line, options: [], range: NSRange(line.startIndex..., in: line)),
-                 let lastMatch = matches.last else {
-               return nil
-           }
-           
-           let range = Range(lastMatch.range, in: line)
-           return range.map { String(line[$0]) }
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        
+        guard let matches = regex?.matches(in: line, options: [], range: NSRange(line.startIndex..., in: line)),
+              let lastMatch = matches.last else {
+            return nil
+        }
+        
+        let range = Range(lastMatch.range, in: line)
+        return range.map { String(line[$0]) }
     }
 
+    /// Cleans the total amount by removing unwanted characters.
+    /// - Parameter amount: The total amount as a string.
+    /// - Returns: The cleaned total amount as a string.
     private func cleanAmount(_ amount: String) -> String {
         let cleanedAmount = amount.filter { "0123456789.".contains($0) }
         return cleanedAmount

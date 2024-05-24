@@ -1,7 +1,13 @@
+//
 //  ParticipantSearchView.swift
-//  ParticipantSearchView.swift
+//  SpiltBill
+//
+//  Created by Jason Ze on 2024/4/30.
+//
+
 import SwiftUI
 
+/// A SwiftUI view that allows the user to search and select participants for an expense.
 struct ParticipantSearchView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var selectedParticipants: [Participant]
@@ -9,6 +15,7 @@ struct ParticipantSearchView: View {
     @State private var searchText = ""
     let currentUser: Participant
 
+    /// Filters participants based on the search text.
     var filteredParticipants: [Participant] {
         if searchText.isEmpty {
             return allParticipants
@@ -54,10 +61,15 @@ struct ParticipantSearchView: View {
         }
     }
 
+    /// Checks if a participant is already selected.
+    /// - Parameter participant: The participant to check.
+    /// - Returns: A boolean indicating whether the participant is selected.
     private func isSelected(_ participant: Participant) -> Bool {
         selectedParticipants.contains { $0.id == participant.id }
     }
 
+    /// Toggles the selection of a participant.
+    /// - Parameter participant: The participant to toggle.
     private func toggleParticipant(_ participant: Participant) {
         if let index = selectedParticipants.firstIndex(where: { $0.id == participant.id }) {
             selectedParticipants.remove(at: index)
@@ -67,6 +79,7 @@ struct ParticipantSearchView: View {
     }
 }
 
+/// A SwiftUI view representing a row for a participant.
 struct ParticipantRow: View {
     var participant: Participant
     var isSelected: Bool
@@ -87,6 +100,7 @@ struct ParticipantRow: View {
     }
 }
 
+/// A SwiftUI view representing a search bar.
 struct SearchBar: View {
     @Binding var text: String
 
