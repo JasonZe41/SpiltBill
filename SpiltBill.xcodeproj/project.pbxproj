@@ -25,6 +25,8 @@
 		A56710C52C0082120020B17A /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A56710C32C00795F0020B17A /* WatchConnectivity.framework */; };
 		A56710C82C0082170020B17A /* WatchConnectivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A56710C12C0079560020B17A /* WatchConnectivity.framework */; };
 		A56710CC2C013BB30020B17A /* Preview.MP4 in Resources */ = {isa = PBXBuildFile; fileRef = A56710CB2C013BB30020B17A /* Preview.MP4 */; };
+		A56710CE2C014FAB0020B17A /* Marketing for _SplitBill_ App.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A56710CD2C014FAA0020B17A /* Marketing for _SplitBill_ App.pdf */; };
+		A56710D12C014FBE0020B17A /* Exectuive.pdf in Resources */ = {isa = PBXBuildFile; fileRef = A56710D02C014FBE0020B17A /* Exectuive.pdf */; };
 		A57075EC2BF2BB9800839A86 /* ExpenseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57075EB2BF2BB9800839A86 /* ExpenseDetailView.swift */; };
 		A590EE172BE0B2D100CD4627 /* OCRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A590EE162BE0B2D100CD4627 /* OCRView.swift */; };
 		A590EE192BE0B31200CD4627 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A590EE182BE0B31200CD4627 /* ImagePicker.swift */; };
@@ -89,6 +91,9 @@
 		A56710C12C0079560020B17A /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = System/Library/Frameworks/WatchConnectivity.framework; sourceTree = SDKROOT; };
 		A56710C32C00795F0020B17A /* WatchConnectivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WatchConnectivity.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS10.2.sdk/System/Library/Frameworks/WatchConnectivity.framework; sourceTree = DEVELOPER_DIR; };
 		A56710CB2C013BB30020B17A /* Preview.MP4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = Preview.MP4; path = ../../../../../Downloads/Preview.MP4; sourceTree = "<group>"; };
+		A56710CD2C014FAA0020B17A /* Marketing for _SplitBill_ App.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "Marketing for _SplitBill_ App.pdf"; path = "../../../Downloads/Marketing for _SplitBill_ App.pdf"; sourceTree = "<group>"; };
+		A56710CF2C014FAE0020B17A /* Marketing for _SplitBill_ App.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Marketing for _SplitBill_ App.pdf"; sourceTree = "<group>"; };
+		A56710D02C014FBE0020B17A /* Exectuive.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Exectuive.pdf; path = ../../../Downloads/Exectuive.pdf; sourceTree = "<group>"; };
 		A57075EB2BF2BB9800839A86 /* ExpenseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailView.swift; sourceTree = "<group>"; };
 		A590EE162BE0B2D100CD4627 /* OCRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCRView.swift; sourceTree = "<group>"; };
 		A590EE182BE0B31200CD4627 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -187,6 +192,8 @@
 		A5E88E202BC9E617009F0D1A = {
 			isa = PBXGroup;
 			children = (
+				A56710D02C014FBE0020B17A /* Exectuive.pdf */,
+				A56710CF2C014FAE0020B17A /* Marketing for _SplitBill_ App.pdf */,
 				A567107C2C0045630020B17A /* SpiltBillApp Watch App.entitlements */,
 				A5E88E2B2BC9E617009F0D1A /* SpiltBill */,
 				A56710972C0067770020B17A /* SpiltBillWatch Watch App */,
@@ -232,6 +239,7 @@
 		A5E88E4B2BC9E800009F0D1A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A56710CD2C014FAA0020B17A /* Marketing for _SplitBill_ App.pdf */,
 				A56710C32C00795F0020B17A /* WatchConnectivity.framework */,
 				A56710C12C0079560020B17A /* WatchConnectivity.framework */,
 			);
@@ -360,9 +368,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A56710CE2C014FAB0020B17A /* Marketing for _SplitBill_ App.pdf in Resources */,
 				A5E88E342BC9E618009F0D1A /* Preview Assets.xcassets in Resources */,
 				A5E88E312BC9E618009F0D1A /* Assets.xcassets in Resources */,
 				A5E88E3B2BC9E6DE009F0D1A /* GoogleService-Info.plist in Resources */,
+				A56710D12C014FBE0020B17A /* Exectuive.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
