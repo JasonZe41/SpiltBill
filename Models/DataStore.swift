@@ -13,7 +13,7 @@ import FirebaseStorage
 #endif
 import WatchConnectivity
 
-class DataStore: NSObject, ObservableObject, WCSessionDelegate  {
+class DataStore: NSObject, ObservableObject, WCSessionDelegate {
 
     private var db = Firestore.firestore()
     private var storage = Storage.storage()
@@ -26,25 +26,53 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate  {
     override init() {
         super.init()
         initializeWatchConnectivity()
+        fetchDataAndSendToWatch()
+    }
+    
+    private func initializeWatchConnectivity() {
+            if WCSession.isSupported() {
+                let session = WCSession.default
+                session.delegate = self
+                session.activate()
+            }
+        }
+    
+    
+    
+    private func fetchDataAndSendToWatch() {
         fetchCurrentUser { user in
             DispatchQueue.main.async {
                 self.currentUser = user
+                self.checkAndSendDataToWatch()
             }
         }
         fetchExpenses { fetchedExpenses in
             DispatchQueue.main.async {
                 self.expenses = fetchedExpenses
+                self.checkAndSendDataToWatch()
             }
         }
-        fetchFriends()
-    }
-    
-    private func initializeWatchConnectivity() {
-        if WCSession.isSupported() {
-            WCSession.default.delegate = self
-            WCSession.default.activate()
+        fetchFriends {
+            self.checkAndSendDataToWatch()
         }
     }
+    
+    private func checkAndSendDataToWatch() {
+            guard WCSession.default.activationState == .activated else {
+                print("WCSession is not activated yet.")
+                return
+            }
+
+            // Ensure all data is fetched before sending
+            guard !expenses.isEmpty, !friends.isEmpty, let currentUser = currentUser else {
+                print("Data is not ready yet. Expenses: \(expenses.count), Friends: \(friends.count), Current User: \(String(describing: currentUser))")
+                return
+            }
+
+            sendDataToWatch()
+        }
+    
+    
     
     private func getCurrentUserID() -> String? {
         UserDefaults.standard.string(forKey: "userId")
@@ -525,39 +553,61 @@ class DataStore: NSObject, ObservableObject, WCSessionDelegate  {
             }
         }
     }
+    private func sendDataToWatch() {
+        guard WCSession.default.activationState == .activated else {
+            print("WCSession is not activated")
+            return
+        }
 
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        // Handle activation state
+        print("Expenses: \(expenses)")
+        print("Friends: \(friends)")
+        print("Current User: \(String(describing: currentUser))")
+
+        let expensesData = try? JSONEncoder().encode(expenses)
+        let friendsData = try? JSONEncoder().encode(friends)
+        let currentUserData = try? JSONEncoder().encode(currentUser)
+
+        var message: [String: Any] = [:]
+        if let expensesData = expensesData {
+            print("Encoded expenses data size: \(expensesData.count) bytes")
+            message["expenses"] = expensesData
+        }
+        if let friendsData = friendsData {
+            print("Encoded friends data size: \(friendsData.count) bytes")
+            message["friends"] = friendsData
+        }
+        if let currentUserData = currentUserData {
+            print("Encoded currentUser data size: \(currentUserData.count) bytes")
+            message["currentUser"] = currentUserData
+        }
+
+        do {
+            try WCSession.default.updateApplicationContext(message)
+            print("Successfully sent application context to watch.")
+        } catch {
+            print("Failed to send application context to watch: \(error.localizedDescription)")
+        }
     }
+
     
+    
+    // Implement WCSessionDelegate methods
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        if let error = error {
+            print("WCSession activation failed with error: \(error.localizedDescription)")
+        } else {
+            print("WCSession activated with state: \(activationState.rawValue)")
+            sendDataToWatch() // Send data after session activation
+        }
+    }
+
     func sessionDidBecomeInactive(_ session: WCSession) {
         // Handle session inactivity
     }
     
     func sessionDidDeactivate(_ session: WCSession) {
         // Handle session deactivation
+        session.activate()
     }
-    
-    private func sendDataToWatch() {
-        guard WCSession.default.isReachable else { return }
-        
-        let expensesData = try? JSONEncoder().encode(expenses)
-        let friendsData = try? JSONEncoder().encode(friends)
-        let currentUserData = try? JSONEncoder().encode(currentUser)
-        
-        var message: [String: Any] = [:]
-        if let expensesData = expensesData {
-            message["expenses"] = expensesData
-        }
-        if let friendsData = friendsData {
-            message["friends"] = friendsData
-        }
-        if let currentUserData = currentUserData {
-            message["currentUser"] = currentUserData
-        }
-        
-        WCSession.default.sendMessage(message, replyHandler: nil) { error in
-            print("Failed to send data to watch: \(error.localizedDescription)")
-        }
-    }
+
 }
